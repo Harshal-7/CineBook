@@ -1,0 +1,50 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+ 
+generator client {
+  provider = "prisma-client-js"
+}
+ 
+model User {
+  id            String          @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?         @unique
+  password      String?
+  image         String?
+  bookmarks     Bookmark[]
+}
+ 
+ 
+model Bookmark {
+  userId          String @id @default(auto()) @map("_id") @db.ObjectId
+  Title           String?
+  Year            String?
+  Rated           String?
+  Released        String?
+  Runtime         String?
+  Genre           String?
+  Director        String?
+  Writer          String?
+  Actors          String?
+  Plot            String?
+  Language        String?
+  Country         String?
+  Awards          String?
+  Poster          String?
+  Ratings         Rating[]
+  imdbRating      String?
+  imdbVotes       String?
+  imdbID          String?
+  Type            String?
+  BoxOffice       String?
+  user            User     @relation(fields: [userId], references: [id])
+}
+
+model Rating{
+  RatingId        String @id @default(auto()) @map("_id") @db.ObjectId
+  Source          String?
+  Value           String?
+  user            Bookmark @relation(fields: [RatingId], references: [userId])
+}
