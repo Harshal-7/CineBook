@@ -13,7 +13,6 @@ import {
 } from "../ui/form";
 import { Input } from "@/components/ui/input";
 import { Button } from "../ui/button";
-import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { Loader2 } from "lucide-react";
 import { LoginSchema } from "../../../schema/LoginSchema";
@@ -23,12 +22,6 @@ import CardWrapper from "./CardWrapper";
 
 export const LoginForm = () => {
   const [loading, setLoading] = useState(false);
-  const searchParams = useSearchParams();
-  var urlError =
-    searchParams.get("error") === "OAuthAccountNotLinked"
-      ? "Email already in use with different provider!"
-      : "";
-
   const { toast } = useToast();
 
   const form = useForm<z.infer<typeof LoginSchema>>({
