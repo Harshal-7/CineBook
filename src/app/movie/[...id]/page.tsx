@@ -270,7 +270,10 @@ const Movie = ({ params }: { params: { id: any } }) => {
           </div>
 
           {reviewData?.map((i: any, index: number) => (
-            <div className="flex flex-col gap-2 bg-accent p-4 rounded-lg">
+            <div
+              key={index}
+              className="flex flex-col gap-2 bg-accent p-4 rounded-lg"
+            >
               <div className="flex gap-1 items-center text-sm">
                 <Star fill="yellow" stroke="yellow" className="w-3 h-3" />
                 <div>{i.author_details.rating} / 10</div>

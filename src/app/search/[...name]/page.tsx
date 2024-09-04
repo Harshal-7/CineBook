@@ -54,7 +54,7 @@ const SearchPage = ({ params }: { params: { name: any } }) => {
   return (
     <div className="w-full flex flex-col p-6 gap-y-5">
       <div className="text-3xl py-3">
-        Found {result?.total_results} result for '{paramName}'
+        Found {result?.total_results} result for &apos;{paramName}&apos;
       </div>
       <div className="w-full flex flex-wrap gap-10">
         {data?.map((movie: any, index: number) => (
