@@ -48,7 +48,7 @@ export default function TrendingTvshows() {
         slidesToScroll: "auto",
         loop: true,
       }}
-      className="w-full max-w-screen-xl"
+      className="w-full max-w-screen-xl group"
     >
       <CarouselContent className="flex gap-5 ml-5">
         {data?.results.map((tvshow: any, index: number) => (
@@ -68,8 +68,8 @@ export default function TrendingTvshows() {
           </Link>
         ))}
       </CarouselContent>
-      <CarouselPrevious className="top-[45%] -translate-[45%]" />
-      <CarouselNext className="top-[45%] -translate-[45%] -right-16" />
+      <CarouselPrevious className="top-[45%] -translate-[45%] -left-6 opacity-0 group-hover:opacity-100 transition-all duration-300" />
+      <CarouselNext className="top-[45%] -translate-[45%]  opacity-0 group-hover:opacity-100 transition-all duration-300" />
     </Carousel>
   );
 }

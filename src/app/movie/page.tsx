@@ -1,17 +1,12 @@
 "use client";
 
 import axios from "axios";
-import Link from "next/link";
+import React from "react";
 import { useEffect, useState } from "react";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
 
-export default function MoviesPage() {
+import MyCarousel from "@/components/my-carousel";
+
+const MoviesPage = () => {
   const [nowPlaying, setNowPlaying] = useState<any>();
   const [popular, setPopular] = useState<any>();
   const [topRated, setTopRated] = useState<any>();
@@ -109,8 +104,9 @@ export default function MoviesPage() {
   }, []);
 
   if (!nowPlaying || !popular || !topRated || !upcoming) {
-    return <div>loading</div>;
+    return <div>loading...</div>;
   }
+
   return (
     <div className="flex w-full h-screen flex-col gap-10 my-10">
       <div className="flex flex-col gap-5">
@@ -131,42 +127,6 @@ export default function MoviesPage() {
       </div>
     </div>
   );
-}
-
-export const MyCarousel: React.FC<{
-  data: any;
-}> = ({ data }) => {
-  console.log(" DATA : ", data);
-
-  return (
-    <Carousel
-      opts={{
-        align: "start",
-        slidesToScroll: "auto",
-        loop: true,
-      }}
-      className="w-full max-w-screen-xl"
-    >
-      <CarouselContent className="flex gap-5 ml-5">
-        {data?.results.map((movie: any, index: number) => (
-          <Link
-            key={index}
-            href={`/movie/${movie.id}`}
-            className="group cursor-pointer"
-          >
-            <img
-              src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
-              alt="poster"
-              className="w-[250px] h-fit max-w-[250px] max-h-[350px] object-fill object-center rounded-lg"
-            />
-            <div className="py-2 group-hover:font-semibold transition-all duration-300 text-center text-xl ">
-              {movie.title || movie.name}
-            </div>
-          </Link>
-        ))}
-      </CarouselContent>
-      <CarouselPrevious className="top-[45%] -translate-[45%]" />
-      <CarouselNext className="top-[45%] -translate-[45%] -right-16" />
-    </Carousel>
-  );
 };
+
+export default MoviesPage;

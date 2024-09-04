@@ -122,7 +122,7 @@ const Movie = ({ params }: { params: { id: any } }) => {
           />
           <button
             onClick={() => handleBookmark(data)}
-            className="absolute top-0 left-0 bg-transparent backdrop-blur-sm p-3 rounded-br-lg"
+            className="absolute top-0 left-0 bg-transparent p-3 rounded-br-lg"
           >
             {isBookmarked ? (
               <Bookmark fill="red" stroke="red" className="w-8 h-8" />
@@ -190,11 +190,13 @@ const Movie = ({ params }: { params: { id: any } }) => {
                 Production Companies :
               </div>
               <div className="flex gap-4">
-                {data?.production_companies.map((_: any, i: number) => (
-                  <div className="" key={i}>
-                    {_.name}
-                  </div>
-                ))}
+                {data?.production_companies
+                  .slice(0, 3)
+                  .map((_: any, i: number) => (
+                    <div className="" key={i}>
+                      {_.name}
+                    </div>
+                  ))}
               </div>
             </div>
 
