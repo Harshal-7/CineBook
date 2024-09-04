@@ -8,12 +8,10 @@ interface BackButtonProps {
 
 const BackButton = ({ label, href }: BackButtonProps) => {
   return (
-    <button className="font-normal w-full group underline-offset-4 h-9 px-4 py-2">
+    <button className="font-normal w-full group underline-offset-4 hover:underline h-9 px-4 py-2">
       <Link href={href}>
         <span className="">{label.split("?")[0]}?</span>
-        <span className="group-hover:underline text-red">
-          {label.split("?")[1]}
-        </span>
+        <span className="">{label.split("?")[1]}</span>
       </Link>
     </button>
   );

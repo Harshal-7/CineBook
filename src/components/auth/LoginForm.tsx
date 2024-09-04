@@ -93,7 +93,7 @@ export const LoginForm = () => {
                 </FormItem>
               )}
             />
-            <Button variant="red" type="submit" className="w-full py-5">
+            <Button variant="default" type="submit" className="w-full py-5">
               {loading ? (
                 <Loader2 className="animate-spin w-5 h-5" />
               ) : (

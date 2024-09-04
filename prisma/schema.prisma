@@ -19,32 +19,9 @@ model User {
  
 model Bookmark {
   userId          String @id @default(auto()) @map("_id") @db.ObjectId
-  Title           String?
-  Year            String?
-  Rated           String?
-  Released        String?
-  Runtime         String?
-  Genre           String?
-  Director        String?
-  Writer          String?
-  Actors          String?
-  Plot            String?
-  Language        String?
-  Country         String?
-  Awards          String?
-  Poster          String?
-  Ratings         Rating[]
-  imdbRating      String?
-  imdbVotes       String?
+  title           String?
+  poster_path     String?
+  id              Int?
   imdbID          String?
-  Type            String?
-  BoxOffice       String?
   user            User     @relation(fields: [userId], references: [id])
-}
-
-model Rating{
-  RatingId        String @id @default(auto()) @map("_id") @db.ObjectId
-  Source          String?
-  Value           String?
-  user            Bookmark @relation(fields: [RatingId], references: [userId])
 }
