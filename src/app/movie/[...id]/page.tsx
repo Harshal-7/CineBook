@@ -3,15 +3,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import axios from "axios";
-import MovieCard from "@/components/movie-card";
 import { useToast } from "@/hooks/use-toast";
 import {
   addToBookmark,
   checkIfBookmarked,
   removeFromCart,
-} from "../../../../utils/bookmark";
+} from "@/utils/bookmark";
 import { Bookmark, Heart, Info, Star, ThumbsUp, Vote } from "lucide-react";
-import { RottonTomato } from "../../../../utils/config";
 import {
   Accordion,
   AccordionContent,
@@ -56,6 +54,7 @@ const Movie = ({ params }: { params: { id: any } }) => {
     fetchMovies();
   }, []);
 
+  // Check if movie is already bookmarked or not
   useEffect(() => {
     const fetchBookmarkData = async () => {
       const res = await checkIfBookmarked(Number(params.id));
@@ -95,13 +94,16 @@ const Movie = ({ params }: { params: { id: any } }) => {
 
   const handleBookmark = async (movie: any) => {
     if (!isBookmarked) {
-      const res = await addToBookmark(movie);
+      await addToBookmark(movie);
       toast({
         title: "Movie added to bookmark",
         className: "bg-primary text-white",
       });
     } else {
-      const res = await removeFromCart(movie.id);
+      await removeFromCart(movie.id);
+      toast({
+        title: "Movie removed to bookmark",
+      });
     }
     setIsBookmarked((prev) => !prev);
   };

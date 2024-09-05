@@ -3,11 +3,13 @@
 import React, { Fragment, useEffect, useState } from "react";
 
 import axios from "axios";
-import MovieCard from "@/components/movie-card";
 import { useToast } from "@/hooks/use-toast";
-import { addToBookmark } from "../../../../utils/bookmark";
+import {
+  addToBookmarkTvshow,
+  checkIfBookmarkedShow,
+  removeShowFromCart,
+} from "@/utils/bookmark";
 import { Bookmark, Heart, Info, Star, ThumbsUp, Vote } from "lucide-react";
-import { RottonTomato } from "../../../../utils/config";
 import {
   Accordion,
   AccordionContent,
@@ -26,14 +28,16 @@ const TVShow = ({ params }: { params: { id: any } }) => {
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { toast } = useToast();
 
+  // Fetch the show information from id
   useEffect(() => {
-    const fetchMovies = async () => {
+    const fetchShow = async () => {
       const options = {
         method: "GET",
         url: `https://api.themoviedb.org/3/tv/${params.id}?language=en-US`,
         headers: {
           accept: "application/json",
-          Authorization: `${process.env.API_AUTHORIZATION}`,
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2OWEwOGQwZDZmMjI3ZTQ2ZDZhNTRkYzA1ZGNiNWJkYSIsIm5iZiI6MTcyNTQyMzQwOC43MTY5NzYsInN1YiI6IjY1YzNjZTFiYzE1Zjg5MDE2M2Y1NThmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8Cg2PS8MCZqlG81r4q_xsqLcHhczFuvOCPxVPwiWG6M",
         },
       };
 
@@ -47,17 +51,30 @@ const TVShow = ({ params }: { params: { id: any } }) => {
           console.error(error);
         });
     };
-    fetchMovies();
+    fetchShow();
   }, []);
 
+  // Check if show is already bookmarked or not
   useEffect(() => {
-    const fetchMovieReview = async () => {
+    const fetchBookmarkData = async () => {
+      const res = await checkIfBookmarkedShow(Number(params.id));
+      if (res?.id) {
+        setIsBookmarked(true);
+      }
+    };
+    fetchBookmarkData();
+  }, []);
+
+  // Fetch user reviews of the show from id
+  useEffect(() => {
+    const fetchShowReviews = async () => {
       const options = {
         method: "GET",
         url: `https://api.themoviedb.org/3/tv/${params.id}/reviews?language=en-US&page=1`,
         headers: {
           accept: "application/json",
-          Authorization: `${process.env.API_AUTHORIZATION}`,
+          Authorization:
+            "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2OWEwOGQwZDZmMjI3ZTQ2ZDZhNTRkYzA1ZGNiNWJkYSIsIm5iZiI6MTcyNTQyMzQwOC43MTY5NzYsInN1YiI6IjY1YzNjZTFiYzE1Zjg5MDE2M2Y1NThmYyIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.8Cg2PS8MCZqlG81r4q_xsqLcHhczFuvOCPxVPwiWG6M",
         },
       };
 
@@ -72,22 +89,22 @@ const TVShow = ({ params }: { params: { id: any } }) => {
           return error;
         });
     };
-
-    fetchMovieReview();
+    fetchShowReviews();
   }, []);
 
-  const handleBookmark = async (movie: any) => {
+  const handleBookmark = async (show: any) => {
     if (!isBookmarked) {
+      await addToBookmarkTvshow(show);
       toast({
-        title: "Movie added to bookmark",
+        title: "Show added to bookmark",
         className: "bg-primary text-white",
       });
+    } else {
+      await removeShowFromCart(show.id);
+      toast({
+        title: "Show removed to bookmark",
+      });
     }
-
-    // const res = await addToBookmark(movie);
-
-    // console.log("RESSS L : ", res);
-
     setIsBookmarked((prev) => !prev);
   };
 

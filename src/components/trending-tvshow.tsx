@@ -48,23 +48,21 @@ export default function TrendingTvshows() {
         slidesToScroll: "auto",
         loop: true,
       }}
-      className="w-full max-w-screen-xl group"
+      className="w-full max-w-screen-2xl group pr-5"
     >
       <CarouselContent className="flex gap-5 ml-5">
         {data?.results.map((tvshow: any, index: number) => (
           <Link
             key={index}
             href={`/tvshow/${tvshow.id}`}
-            className="group cursor-pointer"
+            className="cursor-pointer hover:font-semibold transition-all duration-300"
           >
             <img
               src={`https://image.tmdb.org/t/p/w500/${tvshow.poster_path}`}
               alt="poster"
               className="w-[250px] h-fit max-w-[250px] max-h-[350px] object-fill object-center rounded-lg"
             />
-            <div className="py-2 group-hover:font-semibold transition-all duration-300 text-center text-xl ">
-              {tvshow.title || tvshow.name}
-            </div>
+            <div className="py-2 text-center text-xl ">{tvshow.name}</div>
           </Link>
         ))}
       </CarouselContent>

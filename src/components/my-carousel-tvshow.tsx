@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/carousel";
 import Link from "next/link";
 
-const MyCarousel = ({ data }: any) => {
+const MyCarouselTvshow = ({ data }: any) => {
   return (
     <Fragment>
       <Carousel
@@ -21,28 +21,28 @@ const MyCarousel = ({ data }: any) => {
         className="w-full max-w-screen-2xl group pr-5"
       >
         <CarouselContent className="flex gap-5 ml-5">
-          {data?.results.map((movie: any, index: number) => (
+          {data?.results.map((show: any, index: number) => (
             <Link
               key={index}
-              href={`/movie/${movie.id}`}
+              href={`/tvshow/${show.id}`}
               className="group cursor-pointer"
             >
               <img
-                src={`https://image.tmdb.org/t/p/w500/${movie.poster_path}`}
+                src={`https://image.tmdb.org/t/p/w500/${show.poster_path}`}
                 alt="poster"
                 className="w-[250px] h-fit max-w-[250px] max-h-[350px] object-fill object-center rounded-lg"
               />
               <div className="py-2 group-hover:font-semibold transition-all duration-300 text-center text-xl ">
-                {movie.title || movie.name}
+                {show.title || show.name}
               </div>
             </Link>
           ))}
         </CarouselContent>
         <CarouselPrevious className="top-[45%] -translate-[45%] -left-6 opacity-0 group-hover:opacity-100 transition-all duration-300" />
-        <CarouselNext className="top-[45%] -translate-[45%]  opacity-0 group-hover:opacity-100 transition-all duration-300" />
+        <CarouselNext className="top-[45%] -translate-[45%] opacity-0 group-hover:opacity-100 transition-all duration-300" />
       </Carousel>
     </Fragment>
   );
 };
 
-export default MyCarousel;
+export default MyCarouselTvshow;

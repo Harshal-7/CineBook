@@ -12,7 +12,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
-import { NavItems } from "../../utils/config";
+import { NavItems } from "@/utils/config";
 import {
   DropdownMenu,
   DropdownMenuContent,

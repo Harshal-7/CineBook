@@ -16,7 +16,7 @@ export default function SearchBar() {
   };
 
   return (
-    <div className="flex justify-center items-center gap-5 w-full mt-5">
+    <div className="flex justify-center items-center gap-5 w-full mt-5 ml-5">
       <button onClick={handleSearch}>
         <Search className="w-6 h-6 text-muted-foreground" />
       </button>
