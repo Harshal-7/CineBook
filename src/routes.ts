@@ -20,7 +20,14 @@ export const authRoutes: string[] = ["/login", "/register", "/error"];
 export const apiAuthPrefix: string = "/api/auth";
 
 /**
+ * The prefix for api authentication routes.
+ * Routes that starts with this prefix are used for API authentication purposes.
+ * @type {string}
+ */
+export const privateRoutes: string = "/bookmark";
+
+/**
  * The default redirect path after loggingin
  * @type {string}
  */
-export const DEFAULT_LOGIN_REDIRECT: string = "/bookmark";
+export const DEFAULT_LOGIN_REDIRECT: string = "/";

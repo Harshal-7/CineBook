@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Outfit } from "next/font/google";
+import { Inter, Outfit, Poppins } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "@/components/ui/toaster";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -8,8 +8,8 @@ import SideNav from "@/components/side-nav";
 import { SessionProvider } from "next-auth/react";
 import TopBar from "@/components/topbar";
 import SearchBar from "@/components/search-bar";
+import { Analytics } from "@vercel/analytics/react";
 
-const inter = Inter({ subsets: ["latin"] });
 const outfit = Outfit({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -25,6 +25,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/icon" type="image/png" />
+      </head>
       <body className={outfit.className}>
         <SessionProvider>
           <ThemeProvider
@@ -48,6 +51,7 @@ export default function RootLayout({
               </div>
             </div>
             <Toaster />
+            <Analytics />
           </ThemeProvider>
         </SessionProvider>
       </body>
