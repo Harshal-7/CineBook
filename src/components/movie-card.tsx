@@ -6,7 +6,7 @@ import Link from "next/link";
 export default function MovieCard({ movie }: any) {
   return (
     <Link
-      href={`/movie/${movie.id}`}
+      href={`/movie/${movie.movieId}`}
       className="w-[250px] group cursor-pointer"
     >
       <img

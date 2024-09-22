@@ -22,11 +22,13 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useRouter } from "next/navigation";
 const TVShow = ({ params }: { params: { id: any } }) => {
   const [data, setData] = useState<any>();
   const [reviewData, setReviewData] = useState<any>();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   // Fetch the show information from id
   useEffect(() => {
@@ -94,13 +96,23 @@ const TVShow = ({ params }: { params: { id: any } }) => {
 
   const handleBookmark = async (show: any) => {
     if (!isBookmarked) {
-      await addToBookmarkTvshow(show);
+      const result = await addToBookmarkTvshow(show);
+      console.log(result);
+
+      if (!result) {
+        router.push("/login");
+        toast({
+          title: "Login to add movies and shows to bookmark",
+          className: "bg-primary text-white",
+        });
+        return;
+      }
       toast({
         title: "Show added to bookmark",
         className: "bg-primary text-white",
       });
     } else {
-      await removeShowFromCart(show.id);
+      await removeShowFromCart(show.showId);
       toast({
         title: "Show removed to bookmark",
       });
@@ -184,7 +196,7 @@ const TVShow = ({ params }: { params: { id: any } }) => {
               <span className="text-muted-foreground font-bold ">
                 Country :
               </span>
-              <span className=""> {data?.production_countries[0].name}</span>
+              <span className=""> {data?.production_countries[0]?.name}</span>
             </div>
             <div className="flex gap-2 items-center">
               <div className="text-muted-foreground font-bold">Genres : </div>

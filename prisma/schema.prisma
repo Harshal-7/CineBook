@@ -19,19 +19,24 @@ model User {
  
  
 model Bookmark {
-  userId          String @id @default(auto()) @map("_id") @db.ObjectId
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
   title           String?
   poster_path     String?
-  id              Int?
   imdbID          String?
-  user            User     @relation(fields: [userId], references: [id])
+  movieId         Int?
+  user            User        @relation(fields: [userEmail], references: [email])
+  userEmail       String      
+  createdAt       DateTime    @default(now())
+
 }
 
  
 model BookmarkShows {
-  userId          String @id @default(auto()) @map("_id") @db.ObjectId
+  id              String      @id @default(auto()) @map("_id") @db.ObjectId
   name            String?
   poster_path     String?
-  id              Int?
-  user            User     @relation(fields: [userId], references: [id])
+  showId          Int?
+  user            User        @relation(fields: [userEmail], references: [email])
+  userEmail       String      
+  createdAt       DateTime    @default(now())
 }

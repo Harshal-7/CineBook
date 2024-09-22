@@ -53,7 +53,7 @@ export function TopRatedMovies() {
         {topRatedMovieData?.results.map((movies: any, index: number) => (
           <Link
             key={index}
-            href={`/tvshow/${movies.id}`}
+            href={`/movie/${movies.id}`}
             className="cursor-pointer hover:font-semibold transition-all duration-300"
           >
             <img

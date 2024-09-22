@@ -35,7 +35,8 @@ const BookmarkPage = () => {
       <div className="flex flex-wrap gap-10 p-5">
         {movies.map((movie: any, index: number) => (
           <Link
-            href={`/movie/${movie.id}`}
+            href={`/movie/${movie.movieId}`}
+            onClick={() => console.log(movie.movieId)}
             className="flex flex-col gap-2 text-center group max-w-[200px]"
             key={index}
           >
@@ -57,7 +58,8 @@ const BookmarkPage = () => {
       <div className="flex flex-wrap gap-10 p-5 ">
         {shows.map((show: any, index: number) => (
           <Link
-            href={`/tvshow/${show.id}`}
+            href={`/tvshow/${show.showId}`}
+            onClick={() => console.log(show.id, show.showId)}
             className="flex flex-col gap-2 text-center group max-w-[200px]"
             key={index}
           >

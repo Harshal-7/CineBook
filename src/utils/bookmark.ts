@@ -1,26 +1,38 @@
 "use server";
 
+import { auth } from "@/auth";
 import { db } from "@/lib/db";
 
 export const addToBookmark = async (movie: any) => {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return null;
+  }
+
+  console.log("session : ", session);
+
   const isPresent = await db.bookmark.findFirst({
     where: {
-      id: movie?.id,
+      movieId: movie?.id,
+      userEmail: session?.user?.email!,
     },
   });
 
   if (isPresent) {
     console.log("is present : ", isPresent);
-
     return isPresent;
   }
 
   const res = await db.bookmark.create({
     data: {
-      id: movie.id,
+      movieId: movie.id,
       imdbID: movie.imdbID,
       title: movie.title,
       poster_path: movie.poster_path,
+      user: {
+        connect: { email: session?.user?.email! },
+      },
     },
   });
 
@@ -29,18 +41,20 @@ export const addToBookmark = async (movie: any) => {
   return res;
 };
 
-export const removeFromCart = async (id: any) => {
+export const removeFromCart = async (movie: any) => {
   const isPresent = await db.bookmark.findFirst({
     where: {
-      id: id,
+      id: movie.movieId,
     },
   });
+
+  console.log("isPresent : ", isPresent);
 
   if (isPresent) {
     const deleteUser = await db.bookmark.delete({
       where: {
         id: isPresent.id,
-        userId: isPresent.userId,
+        userEmail: isPresent.userEmail,
       },
     });
 
@@ -49,14 +63,38 @@ export const removeFromCart = async (id: any) => {
 };
 
 export const fetchBookmarkMovies = async () => {
-  const movie = await db.bookmark.findMany();
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return;
+  }
+
+  const movie = await db.bookmark.findMany({
+    where: {
+      userEmail: session.user.email!,
+    },
+  });
+
+  console.log("All Bookmarked Movies : ", movie);
+
   return movie;
 };
 
 export const checkIfBookmarked = async (id: any) => {
+  const session = await auth();
+
+  console.log(session);
+
+  if (!session?.user?.email) {
+    console.log("INSDIEEEE");
+
+    return;
+  }
+
   const movie = await db.bookmark.findFirst({
     where: {
-      id: id,
+      movieId: id,
+      userEmail: session?.user?.email!,
     },
   });
 
@@ -66,9 +104,16 @@ export const checkIfBookmarked = async (id: any) => {
 // TVSHOW :
 
 export const addToBookmarkTvshow = async (show: any) => {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return null;
+  }
+
   const isPresent = await db.bookmarkShows.findFirst({
     where: {
-      id: show?.id,
+      showId: show?.id,
+      userEmail: session?.user?.email!,
     },
   });
 
@@ -80,9 +125,14 @@ export const addToBookmarkTvshow = async (show: any) => {
 
   const res = await db.bookmarkShows.create({
     data: {
-      id: show.id,
+      showId: show.id,
       name: show.name,
       poster_path: show.poster_path,
+      user: {
+        connect: {
+          email: session?.user?.email!,
+        },
+      },
     },
   });
 
@@ -102,7 +152,7 @@ export const removeShowFromCart = async (id: any) => {
     const deleteUser = await db.bookmarkShows.delete({
       where: {
         id: isPresent.id,
-        userId: isPresent.userId,
+        userEmail: isPresent.userEmail,
       },
     });
 
@@ -111,14 +161,34 @@ export const removeShowFromCart = async (id: any) => {
 };
 
 export const fetchBookmarkShows = async () => {
-  const shows = await db.bookmarkShows.findMany();
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return;
+  }
+
+  const shows = await db.bookmarkShows.findMany({
+    where: {
+      userEmail: session.user.email!,
+    },
+  });
+
+  console.log("All Bookmarked Showes : ", shows);
+
   return shows;
 };
 
 export const checkIfBookmarkedShow = async (id: any) => {
+  const session = await auth();
+
+  if (!session?.user?.email) {
+    return;
+  }
+
   const show = await db.bookmarkShows.findFirst({
     where: {
-      id: id,
+      showId: id,
+      userEmail: session?.user?.email!,
     },
   });
 

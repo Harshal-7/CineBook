@@ -74,7 +74,7 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Name</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="border" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,7 +87,7 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} type="email" />
+                    <Input {...field} type="email" className="border" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -100,7 +100,7 @@ export const RegisterForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" />
+                    <Input {...field} type="password" className="border" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -108,7 +108,7 @@ export const RegisterForm = () => {
             />
             <Button variant="default" type="submit" className="w-full py-5">
               {loading ? (
-                <Loader2 className="animate-spin w-5 h-5" />
+                <Loader2 className="animate-spin w-6 h-6" />
               ) : (
                 <span>Create an account</span>
               )}

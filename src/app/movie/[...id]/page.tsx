@@ -22,12 +22,14 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip";
+import { useRouter } from "next/navigation";
 
 const Movie = ({ params }: { params: { id: any } }) => {
   const [data, setData] = useState<any>();
   const [reviewData, setReviewData] = useState<any>();
   const [isBookmarked, setIsBookmarked] = useState(false);
   const { toast } = useToast();
+  const router = useRouter();
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -94,13 +96,23 @@ const Movie = ({ params }: { params: { id: any } }) => {
 
   const handleBookmark = async (movie: any) => {
     if (!isBookmarked) {
-      await addToBookmark(movie);
+      const result = await addToBookmark(movie);
+
+      if (!result) {
+        router.push("/login");
+        toast({
+          title: "Login to add movies and shows to bookmark",
+          className: "bg-primary text-white",
+        });
+        return;
+      }
+
       toast({
         title: "Movie added to bookmark",
         className: "bg-primary text-white",
       });
     } else {
-      await removeFromCart(movie.id);
+      await removeFromCart(movie);
       toast({
         title: "Movie removed to bookmark",
       });

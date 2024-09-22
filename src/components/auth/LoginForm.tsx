@@ -34,6 +34,7 @@ export const LoginForm = () => {
 
   const onSubmit = async (data: z.infer<typeof LoginSchema>) => {
     setLoading(true);
+
     login(data)
       .then((res: any) => {
         if (res?.error) {
@@ -73,7 +74,7 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Email</FormLabel>
                   <FormControl>
-                    <Input {...field} />
+                    <Input {...field} className="border" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -87,7 +88,7 @@ export const LoginForm = () => {
                 <FormItem>
                   <FormLabel>Password</FormLabel>
                   <FormControl>
-                    <Input {...field} type="password" />
+                    <Input {...field} type="password" className="border" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -95,7 +96,7 @@ export const LoginForm = () => {
             />
             <Button variant="default" type="submit" className="w-full py-5">
               {loading ? (
-                <Loader2 className="animate-spin w-5 h-5" />
+                <Loader2 className="animate-spin w-6 h-6" />
               ) : (
                 <span>Login</span>
               )}
